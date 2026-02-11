@@ -11,10 +11,12 @@
 Use conventional commit format:
 
 ```
-<type>: <short description>
+<type>(<scope>): <short description>
 
 <optional body with details>
 ```
+
+Scopes: `frontend`, `tauri`, `agents`, `tools`, `memory`, `build`, `docs`
 
 Types:
 - `feat` — New feature or capability
@@ -24,11 +26,16 @@ Types:
 - `docs` — Documentation changes
 - `chore` — Build, tooling, or dependency updates
 
+Examples:
+- `feat(agents): implement custom agent loop with tool_use parsing`
+- `fix(tauri): handle Python process crash with restart logic`
+- `feat(frontend): add streaming message display to chat interface`
+
 ## Pull Request Process
 
 1. Branch from `main`
 2. Implement the change with tests
-3. Ensure all checks pass (lint, type check, tests)
+3. Ensure all checks pass (lint, type check, tests) across all three languages
 4. Open a PR with a clear description of what and why
 5. Address review feedback
 6. Squash-merge into `main`
@@ -39,7 +46,8 @@ Types:
 - [ ] Are there tests covering the new behavior?
 - [ ] Is the code clear without excessive comments?
 - [ ] Are error cases handled?
-- [ ] Does it follow the coding standards?
+- [ ] Does it follow the coding standards for the relevant language(s)?
+- [ ] Are IPC interfaces consistent across layers?
 - [ ] No unnecessary changes outside the scope of the PR
 
 ## Definition of Done
@@ -47,5 +55,6 @@ Types:
 A task/feature is "done" when:
 - Code is written and passes all linting and type checks
 - Tests are written and passing
-- Documentation is updated if user-facing behavior changed
+- IPC contracts are verified across layers
+- The feature works end-to-end (user action → UI → Rust → Python → back)
 - PR is approved and merged to `main`

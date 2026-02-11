@@ -2,26 +2,34 @@
 
 ## Vision
 
-OneWork is a unified workspace application that consolidates task management, project tracking, and workflow automation into a single, cohesive experience. The goal is to replace the need for multiple disconnected productivity tools.
+OneWork is a cross-platform desktop automation assistant that brings AI-powered file management and task automation to your local machine. It bundles a Tauri shell (Rust), a React frontend, and an embedded Python multi-agent system into a single installable application.
+
+The core idea: a "thinking brain" orchestrator plans tasks using Claude (via the org's internal CLI), then delegates execution to deterministic "doing brain" specialist agents that operate on files, run scripts, and manage memory — all locally, all offline-capable.
+
+## Critical Constraints
+
+1. **Everything bundled** — Frontend, Rust backend, Python runtime, and agent code ship as one `.app` / `.exe` / `.AppImage`. No external Python install required.
+2. **Org CLI limitation** — The organization's internal Claude CLI is a Messages API passthrough only. It provides NO MCP support, NO tool execution, NO agent SDK features. All agent loop logic and tool execution must be implemented externally.
+3. **No database** — All persistence is file-based (JSON/JSONL). No SQLite, no Postgres, no Redis.
+4. **Local-only** — The assistant works with local files and applications. No internet access beyond the Claude API call.
 
 ## Core Principles
 
-1. **Simplicity first** — Every feature should reduce complexity, not add it. If a feature requires explanation, it needs redesigning.
-2. **Fast by default** — Performance is a feature. The UI must feel instant. Optimize for the common case.
-3. **Offline-capable** — Core functionality should work without a network connection. Sync when available.
-4. **Extensible** — The system should support plugins and integrations without requiring changes to the core.
+1. **Safety first** — Always confirm before destructive operations. Use dry-run previews. Prefer reversible actions.
+2. **Transparent execution** — Stream progress to the user. Explain what each tool does and why it was chosen.
+3. **Personality-driven** — The assistant loads its personality from `soul.md`, making behavior consistent and configurable.
+4. **Learning** — The assistant remembers user preferences, corrections, and workflows across sessions via the file-based memory system.
 
 ## Target Users
 
-- Individual professionals managing personal task lists and projects
-- Small teams (2–15 people) coordinating shared work
-- Developers who want keyboard-driven, minimal-friction workflows
+- Power users who want AI-assisted file organization and automation
+- Developers looking for a local, private AI assistant
+- Teams using an org-managed Claude CLI who want a desktop interface
 
-## Key Features (Planned)
+## Key Capabilities
 
-- **Tasks** — Create, organize, and track tasks with statuses, priorities, and due dates
-- **Projects** — Group tasks into projects with timelines and milestones
-- **Workflows** — Define repeatable processes with templates and automation rules
-- **Views** — Multiple perspectives on the same data (list, board, calendar, timeline)
-- **Search** — Fast, full-text search across all content
-- **Integrations** — Connect with external tools (calendars, repositories, communication platforms)
+- **File Operations** — List, search, organize, and move files with glob patterns and metadata
+- **Automation** — Execute shell commands, AppleScript (macOS), and launch applications
+- **Memory** — Persistent preferences, conversation history, and learned workflows
+- **Multi-Agent** — Orchestrator decomposes complex tasks; specialists execute deterministically
+- **Streaming UI** — Real-time response streaming with tool execution progress indicators
